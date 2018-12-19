@@ -33,10 +33,9 @@ int server_handshake(int *to_client) {
   write(*to_client,ACK,HANDSHAKE_BUFFER_SIZE);
   char response[HANDSHAKE_BUFFER_SIZE];
   read(upstream,response,HANDSHAKE_BUFFER_SIZE);
-  close(*to_client);
-  close(upstream);
   printf("Response received from client: %s\n",response);
   printf("Handshake Complete\n");
+  s2cp=mkfifo("s2c",0644);
   return upstream;
 }
 
@@ -74,8 +73,6 @@ int client_handshake(int *to_server) {
   remove(privatepipe);
   printf("Private FIFO removed\n");
   write(*to_server,ACK,HANDSHAKE_BUFFER_SIZE);
-  close(*to_server);
-  close(downstream);
   printf("Response sent to server\n");
   printf("Handshake complete\n");
   return downstream;
