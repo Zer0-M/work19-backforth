@@ -2,6 +2,7 @@
 
 char * encryptstring(char * str){
   char *encrypted=malloc(sizeof(char));
+  
   if(strlen(str)==0){
     return " ";
   }
@@ -32,10 +33,11 @@ int main() {
     from_client = server_handshake( &to_client );
     char * data=calloc(BUFFER_SIZE,sizeof(char));
     while(read(from_client,data,BUFFER_SIZE)){
-      printf("The client says %s",data);
       char * response=encryptstring(data);
-      write(to_client,response,strlen(response));
-      free(data);
+      write(to_client,response,strlen(response)+1);
+      printf("The client says %s\n",data);
+      fflush(stdout);
+      data=calloc(BUFFER_SIZE,sizeof(char));
     }
   }
 }
