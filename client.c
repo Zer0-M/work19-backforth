@@ -8,13 +8,14 @@ int main() {
 
   from_server = client_handshake( &to_server );
   while(1){
-    char response[BUFFER_SIZE];
+    char *response=calloc(BUFFER_SIZE,sizeof(char));
     printf("Type Message to Server:");
     fgets(response,BUFFER_SIZE,stdin);
-    response[strlen(response)-1]='\0';
     write(to_server,response,strlen(response));
-    char data[BUFFER_SIZE];
+    char* data=calloc(BUFFER_SIZE,sizeof(char));
     read(from_server,data,BUFFER_SIZE);
     printf("The server says %s\n",data);
+    free(data);
+    free(response);
   }
 }

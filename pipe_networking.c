@@ -35,7 +35,6 @@ int server_handshake(int *to_client) {
   read(upstream,response,HANDSHAKE_BUFFER_SIZE);
   printf("Response received from client: %s\n",response);
   printf("Handshake Complete\n");
-  s2cp=mkfifo("s2c",0644);
   return upstream;
 }
 
